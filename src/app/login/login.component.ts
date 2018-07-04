@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../User';
 import { CalendarService } from '../calendar.service';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,17 +13,28 @@ import { CalendarService } from '../calendar.service';
 export class LoginComponent implements OnInit {
 
   user: User;
+  
+  users: Array<User>;
+  password: string;
   constructor(private httpClient: HttpClient, private calservice: CalendarService) { }
+  
 
   ngOnInit() {
   }
 
   onSubmit(form: NgForm)
   {
-    console.log(form);
-    console.log(form.value.username);
-    console.log(form.value.password);
-    
+    this.calservice.getUsers().then(
+      (data:any[]) => {
+        for(let i of data){
+          if(i.email == form.value.username){
+            if(i.password == form.value.password){
+              console.log("logged in")
+            }
+          }
+        }
+      }
+    );
   }
 
   onSubmit2(form: NgForm){
@@ -31,8 +43,7 @@ export class LoginComponent implements OnInit {
       lastname: form.value.lastname,
       email: form.value.email,
       phone: form.value.phone,
-      password: form.value.password,
-      events: null
+      password: form.value.password
     };
     
     //http://project2-env.yw7euukwbt.us-east-2.elasticbeanstalk.com/users

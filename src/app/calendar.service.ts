@@ -8,10 +8,13 @@ import { HttpClient } from '@angular/common/http';
 export class CalendarService {
 
   constructor(private httpClient: HttpClient) { }
-  beanurl = "`http://Project2-env.yw7euukwbt.us-east-2.elasticbeanstalk.com/users";
-  beanurl2 = "`http://Project2-env.yw7euukwbt.us-east-2.elasticbeanstalk.com/events";
+  beanurl = `http://Project2-env.yw7euukwbt.us-east-2.elasticbeanstalk.com/users`;
+  beanurl2 = `http://Project2-env.yw7euukwbt.us-east-2.elasticbeanstalk.com/events`;
+  getUsers(): Promise<any>{
+    return this.httpClient.get(`http://Project2-env.yw7euukwbt.us-east-2.elasticbeanstalk.com/users`).toPromise();
+  }
   getUserById(id: number): Promise<any>{
-    return this.httpClient.get(this.beanurl + id).toPromise();
+    return this.httpClient.get(`http://Project2-env.yw7euukwbt.us-east-2.elasticbeanstalk.com/users/` +id).toPromise();
   }
   createUser(json: JSON): Promise<any>{
     return this.httpClient.post(`http://Project2-env.yw7euukwbt.us-east-2.elasticbeanstalk.com/users`, json).toPromise();

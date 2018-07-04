@@ -1,6 +1,3 @@
-import { Event } from './Event';
-
-type eventArray = Array<Event>;
 
 export class User {
     firstname: string;
@@ -8,6 +5,6 @@ export class User {
     email: string;
     phone: string;
     password: string;
-    //events: eventArray;
 }
+
 

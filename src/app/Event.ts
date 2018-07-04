@@ -1,6 +1,7 @@
 import { Time } from "@angular/common";
 
 export class Event {
+    summary: string;
     location: String;
     description: String;
     priority: number;
