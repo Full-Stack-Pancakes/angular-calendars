@@ -145,53 +145,48 @@
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
-
-      <mat-form-field>
-              <mat-select placeholder="Start Time" [(ngModel)]="starttime" name="starttime">
-                  <mat-option *ngFor="let time of times" [value]="time" name="time">
-                  {{time}}
-                  </mat-option>
-              </mat-select>
-      </mat-form-field>
+        <input [ngxTimepicker]="startTimepicker">
+        <ngx-material-timepicker #startTimepicker></ngx-material-timepicker>
       <br>
       </div>
       <br>
-
       <div class="add-event" fxLayoutAlign="center">
               <mat-form-field >
                   <input matInput [matDatepicker]="endpicker" placeholder="End Date" name="enddate" [(ngModel)]="enddate">
                   <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
                   <mat-datepicker #endpicker></mat-datepicker>
               </mat-form-field>
-              <mat-form-field>
-                      <mat-select placeholder="End Time" [(ngModel)]="endtime" name="endtime">
-                          <mat-option *ngFor="let time of times" [value]="time" name="time">
-                          {{time}}
-                          </mat-option>
-                      </mat-select>
-              </mat-form-field>
+                <input [ngxTimepicker]="endTimepicker">
+                <ngx-material-timepicker #endTimepicker></ngx-material-timepicker>
               <br>
               </div>
               <br>
-
               <div class="add-event" fxLayoutAlign="center">
-
                       <mat-form-field>
                           <mat-select placeholder="Time Zones" [(ngModel)]="currenttz" name="soemthing">
                               <mat-option *ngFor="let timezone of timezones" [value]="timezone" name="timezone">
                               {{timezone}}
                               </mat-option>
                           </mat-select>
-                      </mat-form-field>
-                     
+                      </mat-form-field>  
               </div>
-              
-
       <div fxLayoutAlign="center">
           <button (click)="createEvent()" mat-raised-button color="primary" >Create Event</button>
       </div>
   </mat-card>
 </form>
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!-- EDIT, MODIFY, AND DELETE EVENTS -->
 <h3>

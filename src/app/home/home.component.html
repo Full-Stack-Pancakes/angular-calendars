@@ -32,13 +32,15 @@
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
     
-            <mat-form-field>
+            <!-- <mat-form-field>
                     <mat-select placeholder="Start Time" [(ngModel)]="starttime" name="starttime">
                         <mat-option *ngFor="let time of times" [value]="time" name="time">
                         {{time}}
                         </mat-option>
                     </mat-select>
-            </mat-form-field>
+            </mat-form-field> -->
+            <input [ngxTimepicker]="startTimepicker">
+            <ngx-material-timepicker #startTimepicker></ngx-material-timepicker>
             <br>
             </div>
             <br>
@@ -49,13 +51,15 @@
                         <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
                         <mat-datepicker #endpicker></mat-datepicker>
                     </mat-form-field>
-                    <mat-form-field>
+                    <!-- <mat-form-field>
                             <mat-select placeholder="End Time" [(ngModel)]="endtime" name="endtime">
                                 <mat-option *ngFor="let time of times" [value]="time" name="time">
                                 {{time}}
                                 </mat-option>
                             </mat-select>
-                    </mat-form-field>
+                    </mat-form-field> -->
+                    <input [ngxTimepicker]="startTimepicker">
+                    <ngx-material-timepicker #startTimepicker></ngx-material-timepicker>
                     <br>
                     </div>
                     <br>
