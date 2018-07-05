@@ -93,6 +93,7 @@ export class HomeComponent implements OnInit {
     this.event = {
       location: form.value.eventlocation,
       description: form.value.eventdes,
+      summary: null,
       priority: 3,
       eventtype: null,
       inputtime: null,

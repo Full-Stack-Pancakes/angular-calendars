@@ -181,6 +181,7 @@ export class CalendarComponent {
        description: form.value.description,
        location: null,
        priority: 3,
+       summary: null,
        eventtype: null,
        inputtime: null,
        start: form.value.startDatepicker,

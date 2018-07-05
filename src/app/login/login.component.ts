@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit(form: NgForm)
+  onSubmit(form: NgForm) {
     this.calendarService.getUsers().then(
       (data:any[]) => {
         for(let i of data){
@@ -53,7 +53,6 @@ export class LoginComponent implements OnInit {
       email: form.value.email,
       phone: form.value.phone,
       password: form.value.password,
-      events: null
     };
     
     //http://project2-env.yw7euukwbt.us-east-2.elasticbeanstalk.com/users

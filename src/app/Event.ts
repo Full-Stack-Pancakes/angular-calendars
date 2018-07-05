@@ -8,7 +8,6 @@ export class Event {
     description: String;
     priority: number;
     summary: string;
-    location: String;
     eventtype: string;
     inputtime: Date;
     start: Date;
