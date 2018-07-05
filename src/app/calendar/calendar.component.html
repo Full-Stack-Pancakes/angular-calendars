@@ -1,0 +1,275 @@
+<!-- I DON'T KNOW WHAT THIS MODAL DOES OR HOW IT IS CALLED -->
+<ng-template #modalContent let-close="close">
+  <div class="modal-header">
+    <h5 class="modal-title">Event action occurred</h5>
+    <button type="button" class="close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      Action:
+      <pre>{{ modalData?.action }}</pre>
+    </div>
+    <div>
+      Event:
+      <pre>{{ modalData?.event | json }}</pre>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="close()">OK</button>
+  </div>
+</ng-template>
+
+<!-- CALENDAR HEADER -->
+<div class="row text-center">
+  <!-- PREVIOUS, CURRENT, AND NEXT MONTH BUTTONS -->
+  <div class="col-md-4">
+    <div class="btn-group">
+      <div
+        class="btn btn-primary"
+        mwlCalendarPreviousView
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="activeDayIsOpen = false">
+        Previous
+      </div>
+      <div
+        class="btn btn-outline-secondary"
+        mwlCalendarToday
+        [(viewDate)]="viewDate">
+        Today
+      </div>
+      <div
+        class="btn btn-primary"
+        mwlCalendarNextView
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="activeDayIsOpen = false">
+        Next
+      </div>
+    </div>
+  </div>
+  <!-- CURRENT DATE -->
+  <div class="col-md-4">
+    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+  </div>
+  <!-- VIEW BY MONTH, WEEK, DAY BUTTONS -->
+  <div class="col-md-4">
+    <div class="btn-group">
+      <div
+        class="btn btn-primary"
+        (click)="view = 'month'"
+        [class.active]="view === 'month'">
+        Month
+      </div>
+      <div
+        class="btn btn-primary"
+        (click)="view = 'week'"
+        [class.active]="view === 'week'">
+        Week
+      </div>
+      <div
+        class="btn btn-primary"
+        (click)="view = 'day'"
+        [class.active]="view === 'day'">
+        Day
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+<!-- THE MAIN EVENT - THE CALENDAR!! -->
+<div [ngSwitch]="view">
+  <mwl-calendar-month-view
+    *ngSwitchCase="'month'"
+    [viewDate]="viewDate"
+    [events]="events"
+    [refresh]="refresh"
+    [activeDayIsOpen]="activeDayIsOpen"
+    (dayClicked)="dayClicked($event.day)"
+    (eventClicked)="handleEvent('Clicked', $event.event)"
+    (eventTimesChanged)="eventTimesChanged($event)">
+  </mwl-calendar-month-view>
+  <mwl-calendar-week-view
+    *ngSwitchCase="'week'"
+    [viewDate]="viewDate"
+    [events]="events"
+    [refresh]="refresh"
+    (eventClicked)="handleEvent('Clicked', $event.event)"
+    (eventTimesChanged)="eventTimesChanged($event)">
+  </mwl-calendar-week-view>
+  <mwl-calendar-day-view
+    *ngSwitchCase="'day'"
+    [viewDate]="viewDate"
+    [events]="events"
+    [refresh]="refresh"
+    (eventClicked)="handleEvent('Clicked', $event.event)"
+    (eventTimesChanged)="eventTimesChanged($event)">
+  </mwl-calendar-day-view>
+</div>
+
+<br><br><br>
+
+<form #createevent = "ngForm"  (ngSubmit)= "onSubmit(createevent)" fxLayoutAlign="center">
+
+  <mat-card class="card-form">
+      <mat-card-title>Create Event</mat-card-title>
+      <div class="add-event" fxLayoutAlign="center">
+      <mat-form-field >
+          <input matInput placeholder="Event Title" name="eventtitle" [(ngModel)]="eventtitle">
+      </mat-form-field>
+      <br>
+      </div>
+
+      <div class="add-event" fxLayoutAlign="center">
+      <mat-form-field>
+          <textarea style="border-right:solid 0.5px silver " rows="6" matInput #description maxlength=300 placeholder="Event Description" name="eventdes" [(ngModel)]="eventdes"></textarea>
+          <mat-hint align="end">{{description.value.length}} / 250</mat-hint>
+      </mat-form-field>
+      <br>
+      </div>
+
+      <div class="add-event" fxLayoutAlign="center">
+              <mat-form-field>
+                  <input matInput placeholder="Event Location" name="eventlocation" [(ngModel)]="eventlocation">
+                  <!-- <input ngx-google-places-autocomplete matInput placeholder="Event Location" name="eventlocation" [(ngModel)]="eventlocation"> -->
+              </mat-form-field>
+              <br>
+      </div>
+
+      <div class="add-event" fxLayoutAlign="center">
+      <mat-form-field >
+          <input matInput [matDatepicker]="picker" placeholder="Start Date" name="startdate" [(ngModel)]="startdate">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+              <mat-select placeholder="Start Time" [(ngModel)]="starttime" name="starttime">
+                  <mat-option *ngFor="let time of times" [value]="time" name="time">
+                  {{time}}
+                  </mat-option>
+              </mat-select>
+      </mat-form-field>
+      <br>
+      </div>
+      <br>
+
+      <div class="add-event" fxLayoutAlign="center">
+              <mat-form-field >
+                  <input matInput [matDatepicker]="endpicker" placeholder="End Date" name="enddate" [(ngModel)]="enddate">
+                  <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                  <mat-datepicker #endpicker></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field>
+                      <mat-select placeholder="End Time" [(ngModel)]="endtime" name="endtime">
+                          <mat-option *ngFor="let time of times" [value]="time" name="time">
+                          {{time}}
+                          </mat-option>
+                      </mat-select>
+              </mat-form-field>
+              <br>
+              </div>
+              <br>
+
+              <div class="add-event" fxLayoutAlign="center">
+
+                      <mat-form-field>
+                          <mat-select placeholder="Time Zones" [(ngModel)]="currenttz" name="soemthing">
+                              <mat-option *ngFor="let timezone of timezones" [value]="timezone" name="timezone">
+                              {{timezone}}
+                              </mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                     
+              </div>
+              
+
+      <div fxLayoutAlign="center">
+          <button (click)="createEvent()" mat-raised-button color="primary" >Create Event</button>
+      </div>
+  </mat-card>
+</form>
+
+<!-- EDIT, MODIFY, AND DELETE EVENTS -->
+<h3>
+  Edit events
+  <!-- BY DEFAULT THIS BUTTON ADDS AN EVENT ON THE CURRENT DAY -->
+  <button
+    class="btn btn-primary pull-right"
+    (click)="addEvent()">
+    Add new
+  </button>
+  <div class="clearfix"></div>
+</h3>
+
+<!-- TABLE OF EVENTS -->
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Primary color</th>
+      <th>Secondary color</th>
+      <th>Starts at</th>
+      <th>Ends at</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+    <tr>
+    <tr *ngFor="let event of events; let index = index">
+      <td>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="event.title"
+          (keyup)="refresh.next()"
+          name="description">
+      </td>
+      <td>
+        <input
+          type="color"
+          [(ngModel)]="event.color.primary"
+          (change)="refresh.next()">
+      </td>
+      <td>
+        <input
+          type="color"
+          [(ngModel)]="event.color.secondary"
+          (change)="refresh.next()">
+      </td>
+      <td>
+        <mat-form-field>
+          <input matInput [matDatepicker]="startDatepicker">
+          <mat-datepicker-toggle matSuffix [for]="startDatepicker"></mat-datepicker-toggle>
+          <mat-datepicker #startDatepicker></mat-datepicker>
+        </mat-form-field>
+        <input [ngxTimepicker]="startpicker">
+        <ngx-material-timepicker #startpicker></ngx-material-timepicker>
+      </td>
+      <td>
+        <mat-form-field>
+          <input matInput [matDatepicker]="endDatepicker">
+          <mat-datepicker-toggle matSuffix [for]="endDatepicker"></mat-datepicker-toggle>
+          <mat-datepicker #endDatepicker></mat-datepicker>
+        </mat-form-field>
+        <input [ngxTimepicker]="endpicker">
+        <ngx-material-timepicker #endpicker></ngx-material-timepicker>
+      </td>
+      <td>
+        <button
+          class="btn btn-primary"
+          (click)="saveEvent()">
+          Save
+        </button>
+        <button
+          class="btn btn-danger"
+          (click)="events.splice(index, 1); refresh.next()">
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+
+</table>
