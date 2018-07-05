@@ -15,6 +15,7 @@ export class CalendarService {
   getUsers(): Promise<any>{
     return this.httpClient.get(`http://project2-env.yw7euukwbt.us-east-2.elasticbeanstalk.com/users`).toPromise();
   }
+
   getUserById(id: number): Promise<any>{
     return this.httpClient.get(`http://project2-env.yw7euukwbt.us-east-2.elasticbeanstalk.com/users/` + id).toPromise();
   }

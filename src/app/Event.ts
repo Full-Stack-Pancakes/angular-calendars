@@ -3,9 +3,12 @@ import { EventColor, EventAction } from "calendar-utils";
 import { User } from "./User";
 
 export class Event {
-    location: string;
-    description: string;
-    priority: Number;
+
+    location: String;
+    description: String;
+    priority: number;
+    summary: string;
+    location: String;
     eventtype: string;
     inputtime: Date;
     start: Date;
@@ -16,17 +19,4 @@ export class Event {
     dayofweek: string;
     timezone: string;
     user: User;
-    // id: number;
-    // start: Date;
-    // end: Date;
-    // title: string;
-    // color: {'#ad2121', '#FAE3E3'};
-    // actions: EventAction[];
-    // allDay: boolean;
-    // inputtime: Date;
-    
-    // eventlength: Time;
-    // splitable: Boolean;
-    // minlength: Time;
-    // userid: Number;
 }

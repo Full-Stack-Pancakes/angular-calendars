@@ -5,6 +5,7 @@ import { CalendarService } from '../calendar.service';
 import { User } from '../User';
 
 declare const gapi;
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,14 +19,16 @@ export class LoginComponent implements OnInit {
   SCOPES: string = "https://www.googleapis.com/auth/calendar";
 
   user: User;
+  users: Array<User>;
+  password: string;
 
   constructor(private httpClient: HttpClient, private calendarService : CalendarService) { }
+
 
   ngOnInit() {
   }
 
   onSubmit(form: NgForm)
-  {
     this.calendarService.getUsers().then(
       (data:any[]) => {
         for(let i of data){
@@ -38,6 +41,9 @@ export class LoginComponent implements OnInit {
         }
       }
     );
+    console.log(form);
+    console.log(form.value.username);
+    console.log(form.value.password);
   }
 
   onSubmit2(form: NgForm){
@@ -47,6 +53,7 @@ export class LoginComponent implements OnInit {
       email: form.value.email,
       phone: form.value.phone,
       password: form.value.password,
+      events: null
     };
     
     //http://project2-env.yw7euukwbt.us-east-2.elasticbeanstalk.com/users

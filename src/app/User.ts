@@ -1,5 +1,3 @@
-import { Event } from './Event';
-
 export class User {
     firstname: string;
     lastname: string;
@@ -7,4 +5,5 @@ export class User {
     phone: string;
     password: string;
 }
+
 
