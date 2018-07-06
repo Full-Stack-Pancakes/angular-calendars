@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
               //this.global.isSignIn=true;
               //this.router.navigate(['/home', '']);
               this.global.setSignIn(true);
+              this.calendarService.userid = i.userid;
               console.log("logged in")
               this.router.navigate(['/home']);
               
