@@ -36,9 +36,9 @@ export class LoginComponent implements OnInit {
         for(let i of data){
           if(i.email == form.value.username){
             if(i.password == form.value.password){
-              console.log("logged in");
-               this.global.isSignIn=true;
-              this.router.navigate(['/home', 'default']);
+              this.global.setSignIn(true);
+              console.log("logged in")
+              this.router.navigate(['/home']);
               
             }
           }
@@ -84,9 +84,5 @@ export class LoginComponent implements OnInit {
       
     })
   }
-  signOutGoogle(){
-    gapi.auth2.getAuthInstance().signOut();
-    this.global.setSignIn(false);
-    console.log("LOGOUT>>");
-  }
+
 }

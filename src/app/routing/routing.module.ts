@@ -13,9 +13,9 @@ import {DefaultPageComponent} from '../default-page/default-page.component'
 
 const routes: Routes =[
   { path:"", component: LoginComponent },
+  { path:"profile", component: ProfileComponent },
   { path:"home", component: HomeComponent },
   { path:"login", component: LoginComponent },
-  { path:"profile", component: ProfileComponent },
   { path:"about", component: AboutComponent },
   { path:"tasks", component: TasksComponent },
   { path:"calendar", component: CalendarComponent},

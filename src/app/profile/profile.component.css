@@ -1,0 +1,13 @@
+.example-card {
+    max-width: 400px;
+  }
+  
+  :root {
+    --mypic: "{{pictureurl}}";
+}
+
+  .example-header-image {
+    background-image: var(--mypic);
+    background-size: cover;
+    
+  }
