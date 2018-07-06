@@ -13,7 +13,6 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AboutComponent } from './about/about.component';
-import { TasksComponent } from './tasks/tasks.component';
 import { MaterialModule } from './material/material.module';
 import { LoginComponent } from './login/login.component';
 import { RoutingModule } from './routing/routing.module';
@@ -29,7 +28,6 @@ import { LogoutComponent } from './logout/logout.component'
     HomeComponent,
     ProfileComponent,
     AboutComponent,
-    TasksComponent,
     NavBarComponent,
     CalendarComponent,
     DefaultPageComponent,
