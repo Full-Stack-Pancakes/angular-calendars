@@ -41,6 +41,12 @@
         <button (click)="toggleAddForm()" mat-raised-button color="accent" ><mat-icon>create</mat-icon></button>
 </div>
 
+<div fxLayoutAlign="start" class="b">
+       
+</div>
+<div fxLayoutAlign="start">
+        <button (click)="toggleMap()" mat-raised-button color="accent" ><mat-icon>map</mat-icon></button>
+</div>
 
 
 <form #createevent = "ngForm"  (ngSubmit)= "onSubmit(createevent)" fxLayoutAlign="center" *ngIf="showForm">
@@ -220,8 +226,10 @@
 
 
 
-<!-- <iframe src="https://calendar.google.com/calendar/embed?src=evannara%40gmail.com&ctz=America%2FNew_York" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe> -->
 
+    <div fxLayoutAlign="center" *ngIf="showMap">
+        <iframe src="https://calendar.google.com/calendar/embed?src=evannara%40gmail.com&ctz=America%2FNew_York" style="border: 0" width="1000" height="750" frameborder="0" scrolling="no"></iframe>
+    </div>
 
 
 

@@ -30,11 +30,17 @@ export class HomeComponent implements OnInit {
   showForm: Boolean=false;;
   successComment: Boolean=false;
   successDelete: Boolean=false;
+  showMap: Boolean=false;
+
   constructor(private calendarService: CalendarService) { }
 
   toggleAddForm()
   {
     this.showForm=!this.showForm;
+  }
+  toggleMap()
+  {
+    this.showMap=!this.showMap;
   }
 
   editEvent(id)
@@ -95,7 +101,7 @@ export class HomeComponent implements OnInit {
        this.toggleAddForm();
        setTimeout(() => {
         this.successComment=false;
-    }, 3000);
+    }, 4000);
   }
 
 
@@ -130,7 +136,7 @@ export class HomeComponent implements OnInit {
        this.successDelete=true;
        setTimeout(() => {
         this.successDelete=false;
-    }, 3000);
+    }, 4000);
   }
 
 
