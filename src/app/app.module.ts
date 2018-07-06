@@ -18,7 +18,9 @@ import { MaterialModule } from './material/material.module';
 import { LoginComponent } from './login/login.component';
 import { RoutingModule } from './routing/routing.module';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
-import {GooglePlaceModule} from 'ngx-google-places-autocomplete'
+import {GooglePlaceModule} from 'ngx-google-places-autocomplete';
+import { DefaultPageComponent } from './default-page/default-page.component';
+import { LogoutComponent } from './logout/logout.component'
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import {GooglePlaceModule} from 'ngx-google-places-autocomplete'
     AboutComponent,
     TasksComponent,
     NavBarComponent,
-    CalendarComponent
+    CalendarComponent,
+    DefaultPageComponent,
+    LogoutComponent
 
   ],
   imports: [
