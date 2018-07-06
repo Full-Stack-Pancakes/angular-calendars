@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 export class CalendarService {
 
   user: User;
-
+  userid: number;
   constructor(private httpClient: HttpClient) { }
   beanurl = "http://project2-env.yw7euukwbt.us-east-2.elasticbeanstalk.com/users";
   beanurl2 = "http://Project2-env.yw7euukwbt.us-east-2.elasticbeanstalk.com/events";

@@ -67,69 +67,94 @@ export class CalendarComponent {
   };
 
   actions: CalendarEventAction[] = [
-    // {
-    //   label: '<i class="fa fa-fw fa-pencil"></i>',
-    //   onClick: ({ event }: { event: CalendarEvent }): void => {
-    //     this.handleEvent('Edited', event);
-    //   }
-    // },
-    // {
-    //   label: '<i class="fa fa-fw fa-times"></i>',
-    //   onClick: ({ event }: { event: CalendarEvent }): void => {
-    //     this.events = this.events.filter(iEvent => iEvent !== event);
-    //     this.handleEvent('Deleted', event);
-    //   }
-    // }
+    {
+      label: '<i class="fa fa-fw fa-pencil"></i>',
+      onClick: ({ event }: { event: CalendarEvent }): void => {
+        this.handleEvent('Edited', event);
+      }
+    },
+    {
+      label: '<i class="fa fa-fw fa-times"></i>',
+      onClick: ({ event }: { event: CalendarEvent }): void => {
+        this.events = this.events.filter(iEvent => iEvent !== event);
+        this.handleEvent('Deleted', event);
+      }
+    }
   ];
 
   refresh: Subject<any> = new Subject();
 
   event: Event;
   
-  events: Event[];
+  userEvents: Event[];
 
-  // events: CalendarEvent[] = [
-  //   {
-  //     start: subDays(startOfDay(new Date()), 1),
-  //     end: addDays(new Date(), 1),
-  //     title: 'A 3 day event',
-  //     color: colors.red,
-  //     actions: this.actions
-  //   },
-  //   {
-  //     start: startOfDay(new Date()),
-  //     title: 'An event with no end date',
-  //     color: colors.yellow,
-  //     actions: this.actions
-  //   },
-  //   {
-  //     start: subDays(endOfMonth(new Date()), 3),
-  //     end: addDays(endOfMonth(new Date()), 3),
-  //     title: 'A long event that spans 2 months',
-  //     color: colors.blue
-  //   },
-  //   {
-  //     start: addHours(startOfDay(new Date()), 2),
-  //     end: new Date(),
-  //     title: 'A draggable and resizable event',
-  //     color: colors.yellow,
-  //     actions: this.actions,
-  //     resizable: {
-  //       beforeStart: true,
-  //       afterEnd: true
-  //     },
-  //     draggable: true
-  //   }
-  // ];
+  events: CalendarEvent[] = [
+    {
+      start: subDays(startOfDay(new Date()), 1),
+      end: addDays(new Date(), 1),
+      title: 'A 3 day event',
+      color: colors.red,
+      actions: this.actions
+    },
+    {
+      start: startOfDay(new Date()),
+      title: 'An event with no end date',
+      color: colors.yellow,
+      actions: this.actions
+    },
+    {
+      start: subDays(endOfMonth(new Date()), 3),
+      end: addDays(endOfMonth(new Date()), 3),
+      title: 'A long event that spans 2 months',
+      color: colors.blue
+    },
+    {
+      start: addHours(startOfDay(new Date()), 2),
+      end: new Date(),
+      title: 'A draggable and resizable event',
+      color: colors.yellow,
+      actions: this.actions,
+      resizable: {
+        beforeStart: true,
+        afterEnd: true
+      },
+      draggable: true
+    }
+  ];
 
   activeDayIsOpen: boolean = true;
 
   constructor(private modal: NgbModal, private httpClient: HttpClient, private calendarService : CalendarService) {}
-
+  myEvent: Event;
   ngOnInit() {
-    // this.calendarService.getEventById(2).then(
-    //   (data) => this.myEvents.push(data));
-    // console.log(this.myEvents);
+    //this.calendarService.getEventsByUserId(this.calendarService.userid).then((data:any[]) => this.userEvents);
+    this.calendarService.getEventsByUserId(this.calendarService.userid).then((data:any[]) => { 
+    for (let i of data) {
+      console.log(i);
+    }
+      // for(let i of data){
+      //   console.log(i);
+      //   console.log(i.dayofweek);
+      //   this.myEvent.dayofweek = i.dayofweek;
+      //   this.myEvent.user = i.user;
+      //   this.myEvent.description = i.description;
+      //   this.myEvent.duetime = i.duetime;
+      //   this.myEvent.summary = i.summary;
+      //   this.myEvent.endtime = i.endtime;
+      //   this.myEvent.eventlength = i.eventlength;
+      //   this.myEvent.eventtype = i.eventtype;
+      //   this.myEvent.inputtime = i.inputtime;
+      //   this.myEvent.location = i.location;
+      //   this.myEvent.minlength = i.minlength;
+      //   this.myEvent.priority = i.priority;
+      //   this.myEvent.splitable = i.splitable;
+      //   this.myEvent.starttime = i.starttime;
+      //   this.myEvent.timezone = i.timezone;
+      //   this.userEvents.push(this.event);
+      // }
+     });
+    
+
   }
 
 
@@ -166,21 +191,15 @@ export class CalendarComponent {
   // ADDS NEW EVENT TO CURRENT, FULL DAY BY DEFAULT
   addEvent(): void {
     this.events.push({
-      summary: 'New event',
-      starttime: startOfDay(new Date()),
-      endtime: endOfDay(new Date()),
-      location: null,
-      description: null,
-      priority: null,
-      eventtype: null,
-      inputtime: null,
-      duetime: null,
-      eventlength: null,
-      splitable: null,
-      minlength: null,
-      dayofweek: null,
-      timezone: null,
-      user: this.calendarService.user
+        title: 'New event',
+        start: startOfDay(new Date()),
+        end: endOfDay(new Date()),
+        color: colors.red,
+        draggable: true,
+        resizable: {
+          beforeStart: true,
+          afterEnd: true
+        }
     });
     this.refresh.next();
   }
