@@ -128,6 +128,7 @@ export class CalendarComponent {
   myEvent: Event;
   ngOnInit() {
     //this.calendarService.getEventsByUserId(this.calendarService.userid).then((data:any[]) => this.userEvents);
+    console.log("userid: " + this.calendarService.userid);
     this.calendarService.getEventsByUserId(this.calendarService.userid).then((data:any[]) => { 
     for (let i of data) {
       console.log(i);
