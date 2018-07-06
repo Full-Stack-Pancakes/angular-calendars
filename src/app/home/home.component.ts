@@ -46,22 +46,6 @@ export class HomeComponent implements OnInit {
      this.begindate=this.googleevent.start.dateTime;
      this.currenttz=this.googleevent.start.timeZone;
      this.duedate=this.googleevent.end.dateTime;
-    // this.new_event = {
-    //   'summary': this.eventtitle,
-    //   'location': this.eventlocation,
-    //   'description': this.eventdes,
-    //   'start': {
-    //     'dateTime': this.begindate,
-    //     'timeZone': this.currenttz
-    //   },
-    //   'end': {
-    //     'dateTime': this.duedate,
-    //     'timeZone': this.currenttz
-    //   }}
-
-    //   gapi.client.calendar.events.update({
-    //     'calendarId': 'primary','eventId': id,
-    //      'resource': this.new_event}).execute();
   
   }
   createEvent()
@@ -97,8 +81,9 @@ export class HomeComponent implements OnInit {
       priority: 3,
       eventtype: null,
       inputtime: null,
-      start: form.value.startdate,
-      end: form.value.enddate,
+      duetime: null,
+      starttime: form.value.startdate,
+      endtime: form.value.enddate,
       eventlength: null,
       splitable: null,
       minlength: null,

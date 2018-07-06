@@ -31,6 +31,12 @@ export class CalendarService {
   deleteUserById(id: number): Promise<any>{
     return this.httpClient.delete(this.beanurl + id).toPromise();
   }
+  getEvents():Promise<any>{
+    return this.httpClient.get(`http://project2-env.yw7euukwbt.us-east-2.elasticbeanstalk.com/events`).toPromise();
+  }
+  getEventsByUserId(id: number): Promise<any>{
+    return this.httpClient.get(`http://project2-env.yw7euukwbt.us-east-2.elasticbeanstalk.com/ue/` + id).toPromise();
+  }
   getEventById(id: number): Promise<any>{
     return this.httpClient.get(`http://project2-env.yw7euukwbt.us-east-2.elasticbeanstalk.com/events/` + id).toPromise();
   }

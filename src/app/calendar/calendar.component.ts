@@ -26,6 +26,7 @@ import { Event } from '../Event';
 import { Time } from '@angular/common';
 import { CalendarService } from '../calendar.service';
 import { NgForm } from '@angular/forms';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 const colors: any = {
   red: {
@@ -66,58 +67,60 @@ export class CalendarComponent {
   };
 
   actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fa fa-fw fa-pencil"></i>',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      }
-    },
-    {
-      label: '<i class="fa fa-fw fa-times"></i>',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter(iEvent => iEvent !== event);
-        this.handleEvent('Deleted', event);
-      }
-    }
+    // {
+    //   label: '<i class="fa fa-fw fa-pencil"></i>',
+    //   onClick: ({ event }: { event: CalendarEvent }): void => {
+    //     this.handleEvent('Edited', event);
+    //   }
+    // },
+    // {
+    //   label: '<i class="fa fa-fw fa-times"></i>',
+    //   onClick: ({ event }: { event: CalendarEvent }): void => {
+    //     this.events = this.events.filter(iEvent => iEvent !== event);
+    //     this.handleEvent('Deleted', event);
+    //   }
+    // }
   ];
 
   refresh: Subject<any> = new Subject();
 
   event: Event;
+  
+  events: Event[];
 
-  events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: colors.red,
-      actions: this.actions
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: colors.yellow,
-      actions: this.actions
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: colors.blue
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: new Date(),
-      title: 'A draggable and resizable event',
-      color: colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      },
-      draggable: true
-    }
-  ];
+  // events: CalendarEvent[] = [
+  //   {
+  //     start: subDays(startOfDay(new Date()), 1),
+  //     end: addDays(new Date(), 1),
+  //     title: 'A 3 day event',
+  //     color: colors.red,
+  //     actions: this.actions
+  //   },
+  //   {
+  //     start: startOfDay(new Date()),
+  //     title: 'An event with no end date',
+  //     color: colors.yellow,
+  //     actions: this.actions
+  //   },
+  //   {
+  //     start: subDays(endOfMonth(new Date()), 3),
+  //     end: addDays(endOfMonth(new Date()), 3),
+  //     title: 'A long event that spans 2 months',
+  //     color: colors.blue
+  //   },
+  //   {
+  //     start: addHours(startOfDay(new Date()), 2),
+  //     end: new Date(),
+  //     title: 'A draggable and resizable event',
+  //     color: colors.yellow,
+  //     actions: this.actions,
+  //     resizable: {
+  //       beforeStart: true,
+  //       afterEnd: true
+  //     },
+  //     draggable: true
+  //   }
+  // ];
 
   activeDayIsOpen: boolean = true;
 
@@ -163,57 +166,55 @@ export class CalendarComponent {
   // ADDS NEW EVENT TO CURRENT, FULL DAY BY DEFAULT
   addEvent(): void {
     this.events.push({
-      title: 'New event',
-      start: startOfDay(new Date()),
-      end: endOfDay(new Date()),
-      color: colors.red,
-      draggable: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      }
+      summary: 'New event',
+      starttime: startOfDay(new Date()),
+      endtime: endOfDay(new Date()),
+      location: null,
+      description: null,
+      priority: null,
+      eventtype: null,
+      inputtime: null,
+      duetime: null,
+      eventlength: null,
+      splitable: null,
+      minlength: null,
+      dayofweek: null,
+      timezone: null,
+      user: this.calendarService.user
     });
     this.refresh.next();
   }
-
+  a: any;
+  b: any;
+  c: any;
   onSubmit(form: NgForm) {
-     this.event = {
-       description: form.value.description,
-       location: null,
-       priority: 3,
-       summary: null,
-       eventtype: null,
-       inputtime: null,
-       start: form.value.startDatepicker,
-       end: form.value.endDatepicker,
-       eventlength: null,
-       splitable: null,
-       minlength: null,
-       dayofweek: null,
-       timezone: null,
-       user: this.calendarService.user
-     };
-     console.log("inside onSubmit");
-     var aa = JSON.parse(JSON.stringify(this.event));
-     this.calendarService.createEvent(aa);
-   }
+    this.a = form.value.enddate;
+    console.log(this.a);
+    this.c = form.value.endtime;
+    console.log(this.c);
+    this.a.setHours((new Date(this.c)).getHours());
+    this.b = this.a.getHours();
+    console.log(this.b);
 
-  // RENAME TO MATCH ABOVE METHOD
-  saveEvent(): void {
-
+    this.event = {
+      
+      summary: form.value.eventtitle,
+      location: form.value.eventlocation,
+      description: form.value.eventdes,
+      priority: form.value.priority*1,
+      eventtype: "static",
+      inputtime: null,
+      starttime: form.value.startdate,
+      endtime: form.value.enddate.setHours(this.a),
+      duetime: null,
+      eventlength: null,
+      splitable: null,
+      minlength: null,
+      dayofweek: null,
+      timezone: form.value.currenttz,
+      user: this.calendarService.user
+    };
+    var aa = JSON.parse(JSON.stringify(this.event));
+    this.calendarService.createEvent(aa);
   }
-
-//   this.user = {
-//     firstname: form.value.firstname,
-//     lastname: form.value.lastname,
-//     email: form.value.email,
-//     phone: form.value.phone,
-//     password: form.value.password,
-//   };
-  
-//   //http://project2-env.yw7euukwbt.us-east-2.elasticbeanstalk.com/users
-//   var aa = JSON.parse(JSON.stringify(this.user));
-//   console.log(aa);
-//   this.calendarService.createUser(aa);
-// }
-}
+  }
