@@ -36,6 +36,10 @@ export class LoginComponent implements OnInit {
         for(let i of data){
           if(i.email == form.value.username){
             if(i.password == form.value.password){
+              //console.log("logged in");
+              //this.calendarService.userid = i.userid;
+              //this.global.isSignIn=true;
+              //this.router.navigate(['/home', '']);
               this.global.setSignIn(true);
               console.log("logged in")
               this.router.navigate(['/home']);

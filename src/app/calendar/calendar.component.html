@@ -145,8 +145,13 @@
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
-        <input [ngxTimepicker]="startTimepicker">
-        <ngx-material-timepicker #startTimepicker></ngx-material-timepicker>
+      <mat-form-field>
+          <mat-select placeholder="Start Time" [(ngModel)]="starttime" name="starttime">
+              <mat-option *ngFor="let time of times" [value]="time" name="time">
+              {{time}}
+              </mat-option>
+          </mat-select>
+      </mat-form-field>
       <br>
       </div>
       <br>
@@ -156,8 +161,13 @@
                   <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
                   <mat-datepicker #endpicker></mat-datepicker>
               </mat-form-field>
-                <input [ngxTimepicker]="endTimepicker">
-                <ngx-material-timepicker #endTimepicker></ngx-material-timepicker>
+              <mat-form-field>
+                  <mat-select placeholder="Start Time" [(ngModel)]="endtime" name="endtime">
+                      <mat-option *ngFor="let time of times" [value]="time" name="time">
+                      {{time}}
+                      </mat-option>
+                  </mat-select>
+              </mat-form-field>
               <br>
               </div>
               <br>
@@ -188,10 +198,10 @@
 
 
 
-<!-- EDIT, MODIFY, AND DELETE EVENTS -->
-<h3>
+
+<!-- <h3>
   Edit events
-  <!-- BY DEFAULT THIS BUTTON ADDS AN EVENT ON THE CURRENT DAY -->
+
   <button
     class="btn btn-primary pull-right"
     (click)="addEvent()">
@@ -200,7 +210,6 @@
   <div class="clearfix"></div>
 </h3>
 
-<!-- TABLE OF EVENTS -->
 <table class="table table-bordered">
   <thead>
     <tr>
@@ -267,4 +276,4 @@
     </tr>
   </tbody>
 
-</table>
+</table> -->

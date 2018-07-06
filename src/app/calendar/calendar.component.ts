@@ -26,6 +26,7 @@ import { Event } from '../Event';
 import { Time } from '@angular/common';
 import { CalendarService } from '../calendar.service';
 import { NgForm } from '@angular/forms';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 const colors: any = {
   red: {
@@ -84,6 +85,8 @@ export class CalendarComponent {
   refresh: Subject<any> = new Subject();
 
   event: Event;
+  
+  userEvents: Event[];
 
   events: CalendarEvent[] = [
     {
@@ -122,11 +125,36 @@ export class CalendarComponent {
   activeDayIsOpen: boolean = true;
 
   constructor(private modal: NgbModal, private httpClient: HttpClient, private calendarService : CalendarService) {}
-
+  myEvent: Event;
   ngOnInit() {
-    // this.calendarService.getEventById(2).then(
-    //   (data) => this.myEvents.push(data));
-    // console.log(this.myEvents);
+    //this.calendarService.getEventsByUserId(this.calendarService.userid).then((data:any[]) => this.userEvents);
+    this.calendarService.getEventsByUserId(this.calendarService.userid).then((data:any[]) => { 
+    for (let i of data) {
+      console.log(i);
+    }
+      // for(let i of data){
+      //   console.log(i);
+      //   console.log(i.dayofweek);
+      //   this.myEvent.dayofweek = i.dayofweek;
+      //   this.myEvent.user = i.user;
+      //   this.myEvent.description = i.description;
+      //   this.myEvent.duetime = i.duetime;
+      //   this.myEvent.summary = i.summary;
+      //   this.myEvent.endtime = i.endtime;
+      //   this.myEvent.eventlength = i.eventlength;
+      //   this.myEvent.eventtype = i.eventtype;
+      //   this.myEvent.inputtime = i.inputtime;
+      //   this.myEvent.location = i.location;
+      //   this.myEvent.minlength = i.minlength;
+      //   this.myEvent.priority = i.priority;
+      //   this.myEvent.splitable = i.splitable;
+      //   this.myEvent.starttime = i.starttime;
+      //   this.myEvent.timezone = i.timezone;
+      //   this.userEvents.push(this.event);
+      // }
+     });
+    
+
   }
 
 
@@ -163,57 +191,49 @@ export class CalendarComponent {
   // ADDS NEW EVENT TO CURRENT, FULL DAY BY DEFAULT
   addEvent(): void {
     this.events.push({
-      title: 'New event',
-      start: startOfDay(new Date()),
-      end: endOfDay(new Date()),
-      color: colors.red,
-      draggable: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      }
+        title: 'New event',
+        start: startOfDay(new Date()),
+        end: endOfDay(new Date()),
+        color: colors.red,
+        draggable: true,
+        resizable: {
+          beforeStart: true,
+          afterEnd: true
+        }
     });
     this.refresh.next();
   }
-
+  a: any;
+  b: any;
+  c: any;
   onSubmit(form: NgForm) {
-     this.event = {
-       description: form.value.description,
-       location: null,
-       priority: 3,
-       summary: null,
-       eventtype: null,
-       inputtime: null,
-       start: form.value.startDatepicker,
-       end: form.value.endDatepicker,
-       eventlength: null,
-       splitable: null,
-       minlength: null,
-       dayofweek: null,
-       timezone: null,
-       user: this.calendarService.user
-     };
-     console.log("inside onSubmit");
-     var aa = JSON.parse(JSON.stringify(this.event));
-     this.calendarService.createEvent(aa);
-   }
+    this.a = form.value.enddate;
+    console.log(this.a);
+    this.c = form.value.endtime;
+    console.log(this.c);
+    this.a.setHours((new Date(this.c)).getHours());
+    this.b = this.a.getHours();
+    console.log(this.b);
 
-  // RENAME TO MATCH ABOVE METHOD
-  saveEvent(): void {
-
+    this.event = {
+      
+      summary: form.value.eventtitle,
+      location: form.value.eventlocation,
+      description: form.value.eventdes,
+      priority: form.value.priority*1,
+      eventtype: "static",
+      inputtime: null,
+      starttime: form.value.startdate,
+      endtime: form.value.enddate.setHours(this.a),
+      duetime: null,
+      eventlength: null,
+      splitable: null,
+      minlength: null,
+      dayofweek: null,
+      timezone: form.value.currenttz,
+      user: this.calendarService.user
+    };
+    var aa = JSON.parse(JSON.stringify(this.event));
+    this.calendarService.createEvent(aa);
   }
-
-//   this.user = {
-//     firstname: form.value.firstname,
-//     lastname: form.value.lastname,
-//     email: form.value.email,
-//     phone: form.value.phone,
-//     password: form.value.password,
-//   };
-  
-//   //http://project2-env.yw7euukwbt.us-east-2.elasticbeanstalk.com/users
-//   var aa = JSON.parse(JSON.stringify(this.user));
-//   console.log(aa);
-//   this.calendarService.createUser(aa);
-// }
-}
+  }
