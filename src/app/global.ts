@@ -17,6 +17,7 @@ export class Globals {
     this.myNum='200';
     this.update.next();
   }
+  
   getSignIn() {
     return this.isSignIn;
   }

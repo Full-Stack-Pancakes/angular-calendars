@@ -1,4 +1,49 @@
-<form #createevent = "ngForm"  (ngSubmit)= "onSubmit(createevent)" fxLayoutAlign="center">
+
+<div class="container" style="width:90%">
+
+    <table style="width:100%" class="table table-hover">
+        <thead>
+        <tr>
+            <th>TITLE</th>
+            <th>LOCATION</th>
+            <th>DESCRIPTION</th>
+            <th>START DATE TIME</th>
+            <th>END DATE TIME</th>
+        </tr>
+        </thead>
+        <tr *ngFor="let event of googleevents">
+            <td> {{event.summary}}</td>
+            <td> {{event.location}}</td>
+            <td> {{event.description}}</td>
+            <td> {{event.start.dateTime}}</td>
+            <td> {{event.end.dateTime}}</td>
+
+            <div fxLayoutAlign="center">
+                <button mat-mini-fab (click)="deleteEvents(event.id)" mat-raised-button color="warn" ><mat-icon>delete</mat-icon></button>
+            </div>
+        </tr>
+    </table>
+    <div class="alert alert-success" role="alert" *ngIf="successComment" fxLayout="center">
+            You Have Successfully Created An Event!
+    </div>
+    <div class="alert alert-info" role="alert" *ngIf="successDelete" fxLayout="center">
+        You Have Successfully Remove An Event!
+    </div>
+</div>
+<div fxLayoutAlign="start">
+        <button (click)="populateEvents()" mat-raised-button color="accent" ><mat-icon>restore_page</mat-icon></button>
+</div>
+
+<div fxLayoutAlign="start" class="b">
+       
+</div>
+<div fxLayoutAlign="start">
+        <button (click)="toggleAddForm()" mat-raised-button color="accent" ><mat-icon>create</mat-icon></button>
+</div>
+
+
+
+<form #createevent = "ngForm"  (ngSubmit)= "onSubmit(createevent)" fxLayoutAlign="center" *ngIf="showForm">
 
         <mat-card class="card-form">
             <mat-card-title>Create Event</mat-card-title>
@@ -19,8 +64,8 @@
 
             <div class="add-event" fxLayoutAlign="center">
                     <mat-form-field>
-                        <input matInput placeholder="Event Location" name="eventlocation" [(ngModel)]="eventlocation">
-                        <!-- <input ngx-google-places-autocomplete matInput placeholder="Event Location" name="eventlocation" [(ngModel)]="eventlocation"> -->
+                        <!-- <input matInput placeholder="Event Location" name="eventlocation" [(ngModel)]="eventlocation"> -->
+                        <input ngx-google-places-autocomplete matInput placeholder="Event Location" name="eventlocation" [(ngModel)]="eventlocation">
                     </mat-form-field>
                     <br>
             </div>
@@ -32,15 +77,15 @@
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
     
-            <!-- <mat-form-field>
+            <mat-form-field>
                     <mat-select placeholder="Start Time" [(ngModel)]="starttime" name="starttime">
                         <mat-option *ngFor="let time of times" [value]="time" name="time">
                         {{time}}
                         </mat-option>
                     </mat-select>
-            </mat-form-field> -->
-            <input [ngxTimepicker]="startTimepicker">
-            <ngx-material-timepicker #startTimepicker></ngx-material-timepicker>
+            </mat-form-field>
+            <!-- <input [ngxTimepicker]="startTimepicker">
+            <ngx-material-timepicker #startTimepicker></ngx-material-timepicker> -->
             <br>
             </div>
             <br>
@@ -51,15 +96,15 @@
                         <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
                         <mat-datepicker #endpicker></mat-datepicker>
                     </mat-form-field>
-                    <!-- <mat-form-field>
+                    <mat-form-field>
                             <mat-select placeholder="End Time" [(ngModel)]="endtime" name="endtime">
                                 <mat-option *ngFor="let time of times" [value]="time" name="time">
                                 {{time}}
                                 </mat-option>
                             </mat-select>
-                    </mat-form-field> -->
-                    <input [ngxTimepicker]="startTimepicker">
-                    <ngx-material-timepicker #startTimepicker></ngx-material-timepicker>
+                    </mat-form-field>
+                    <!-- <input [ngxTimepicker]="startTimepicker">
+                    <ngx-material-timepicker #startTimepicker></ngx-material-timepicker> -->
                     <br>
                     </div>
                     <br>
@@ -83,61 +128,13 @@
 
 
             
-            <div fxLayoutAlign="center">
-                    <button (click)="deleteEvent()" mat-raised-button color="primary" >Delete Event</button>
-            </div>
 
-            <div fxLayoutAlign="center">
-                    <button (click)="populateEvents()" mat-raised-button color="accent" >Display Events</button>
-            </div>
-            <div fxLayoutAlign="center">
-                    <button (click)="afterEvents()" mat-raised-button color="accent" >After Events</button>
-            </div>
+
+
+
 
         </mat-card>
 </form>
-
-
-
-<table [ngClass]="tableStyle" style="width:100%">
-    <thead>
-    <tr>
-        
-        <th>TITLE</th>
-        <th>LOCATION</th>
-        <th>DESCRIPTION</th>
-        <th>START DATE TIME</th>
-        <th>END DATE TIME</th>
-       
-    </tr>
-    </thead>
-    <tr *ngFor="let event of googleevents">
-        <td> {{event.summary}}</td>
-        <td> {{event.location}}</td>
-        <td> {{event.description}}</td>
-        <td> {{event.start.dateTime}}</td>
-        <td> {{event.end.dateTime}}</td>
-        <div fxLayoutAlign="center">
-                <button mat-mini-fab (click)="editEvent(event.id)" mat-raised-button color="primary" ><mat-icon>edit</mat-icon></button>
-            </div>
-        <div fxLayoutAlign="center">
-            <button mat-mini-fab (click)="deleteEvents(event.id)" mat-raised-button color="warn" ><mat-icon>delete</mat-icon></button>
-        </div>
-
-        <div fxLayoutAlign="center">
-                <button mat-mini-fab (click)="populateEvent(event.id)" mat-raised-button color="primary" ><mat-icon>person</mat-icon></button>
-            </div>
-            <div fxLayoutAlign="center">
-                    <button mat-mini-fab (click)="afterEvent()" mat-raised-button color="primary" >after event</button>
-                </div>
-
-    </tr>
- 
-</table>
-
-             
-
-
 
 
 <form fxLayoutAlign="center" *ngIf="isEdit">
@@ -223,5 +220,8 @@
 
 
 
-<iframe src="https://calendar.google.com/calendar/embed?src=evannara%40gmail.com&ctz=America%2FNew_York" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+<!-- <iframe src="https://calendar.google.com/calendar/embed?src=evannara%40gmail.com&ctz=America%2FNew_York" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe> -->
+
+
+
 
